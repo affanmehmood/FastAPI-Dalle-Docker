@@ -17,11 +17,9 @@ def test_celery(word: str) -> str:
     print('GEN Started')
     current_task.update_state(state='GENERATING',
                               meta={'Status': 'Dalle Running'})
-    if 'task_id' in current_task:
-        print('Task id inside')
-        print(current_task.task_id)
-    else:
-        print('task id not')
+
+    print(test_celery.request.id)
+
     # print(current_task.task_id)
 
     # main(word, outputs_dir='/app/dalle_tmp/', task_id=current_task)
