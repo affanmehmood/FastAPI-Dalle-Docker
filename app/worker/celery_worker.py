@@ -9,7 +9,7 @@ import time
 def test_celery(word: str) -> str:
     start = time.time()
     main(word, outputs_dir='/app/dalle_tmp/')
-    while len(os.listdir('/app/stable_tmp/')) == 0:
+    while len(os.listdir('/app/dalle_tmp/')) == 0:
         end = time.time()
         current_task.update_state(state='GENERATING',
                                   meta={'Duration': end - start})

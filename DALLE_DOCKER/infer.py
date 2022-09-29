@@ -11,6 +11,7 @@ print('torch.__version__: ', torch.__version__, flush=True)
 print('CUDA AVAILABLE: ', torch.cuda.is_available(), flush=True)
 os.system("nvidia-smi")
 os.mkdir('/app/dalle_tmp/')
+os.mkdir('/app/stable_tmp/')
 # run = wandb.init(anonymous="must")
 # artifact_uri = 'img2dataset'  # @param ["img2dataset", "kaggle dataset"] {allow-input: false}
 # if artifact_uri == 'img2dataset':

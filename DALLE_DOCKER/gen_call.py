@@ -24,7 +24,7 @@ def exists(val):
 
 
 # tokenizer
-def main(dalle_path, text,vqgan_model_path='', vqgan_config_path='', num_images=128, batch_size=4, top_k=0.9,
+def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images=128, batch_size=4, top_k=0.9,
          outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False):
 
     if exists(bpe_path):
