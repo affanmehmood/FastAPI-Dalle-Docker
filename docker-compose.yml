@@ -58,6 +58,13 @@ services:
 
   worker:
     build: .
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
     depends_on:
       - rabbitmq
       - redis
