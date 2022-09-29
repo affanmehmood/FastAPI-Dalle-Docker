@@ -6,6 +6,7 @@ RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
 
 RUN apt purge nvidia-*
+RUN apt-get install software-properties-common
 RUN add-apt-repository ppa:graphics-drivers/ppa
 RUN apt-get update
 RUN apt-get install nvidia-470
