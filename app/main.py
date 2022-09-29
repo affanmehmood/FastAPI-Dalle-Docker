@@ -22,7 +22,7 @@ def background_on_message(task):
 
 @app.get("/{word}")
 async def root(word: str, background_task: BackgroundTasks):
-
+    print('ROOT CALLED', flush=True)
     # set correct task name based on the way you run the example
     if not bool(os.getenv('DOCKER')):
         task_name = "app.worker.celery_worker.test_celery"
