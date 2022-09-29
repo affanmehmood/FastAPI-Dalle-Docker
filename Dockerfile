@@ -1,15 +1,12 @@
 # FROM python:3.7-slim
-FROM nvidia/cuda:10.2-cudnn7-devel
+# FROM nvidia/cuda:10.2-cudnn7-devel
+
+FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu18.04
 
 RUN rm /etc/apt/sources.list.d/cuda.list
 RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
 
-RUN apt purge nvidia-*
-RUN apt-get install software-properties-common -y
-RUN add-apt-repository ppa:graphics-drivers/ppa
-RUN apt-get update
-RUN apt-get install nvidia-470.76
 
 RUN apt-get remove --auto-remove python3
 RUN apt-get -y install python3.7
