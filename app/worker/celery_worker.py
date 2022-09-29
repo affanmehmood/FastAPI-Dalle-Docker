@@ -8,8 +8,8 @@ import time
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
     start = time.time()
-    main(word, outputs_dir='/dalle_tmp/')
-    while len(os.listdir('/stable_tmp/')) == 0:
+    main(word, outputs_dir='/app/dalle_tmp/')
+    while len(os.listdir('/app/stable_tmp/')) == 0:
         end = time.time()
         current_task.update_state(state='GENERATING',
                                   meta={'Duration': end - start})
