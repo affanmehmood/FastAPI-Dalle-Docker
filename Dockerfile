@@ -1,10 +1,10 @@
 # FROM python:3.7-slim
-# FROM nvidia/cuda:10.2-cudnn7-devel
+FROM nvidia/cuda:10.2-cudnn7-devel
 
-FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu18.04
+# FROM nvidia/cuda:11.7.1-cudnn8-devel-ubuntu18.04
 
-# RUN rm /etc/apt/sources.list.d/cuda.list
-# RUN rm /etc/apt/sources.list.d/nvidia-ml.list
+RUN rm /etc/apt/sources.list.d/cuda.list
+RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
 
@@ -51,10 +51,10 @@ RUN pip install "git+https://github.com/affanmehmood/DALLE-pytorch"
 RUN pip install taming-transformers-rom1504
 
 RUN pip install pytorch-lightning==1.7.7
-RUN pip uninstall torch -y
-RUN pip uninstall torchvision -y
-RUN pip uninstall torchaudio -y
-RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+# RUN pip uninstall torch -y
+# RUN pip uninstall torchvision -y
+# RUN pip uninstall torchaudio -y
+# RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 
 
 ENV DOCKER=true
