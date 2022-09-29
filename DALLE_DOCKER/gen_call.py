@@ -39,6 +39,7 @@ def main(dalle_path, text,vqgan_model_path='', vqgan_config_path='', num_images=
 
     assert dalle_path.exists(), 'trained DALL-E must exist'
 
+    print('TORCH VERSION IN GEN CALL', torch.__version__, flush=True)
     load_obj = torch.load(str(dalle_path))
     dalle_params, vae_params, weights, vae_class_name, version = load_obj.pop('hparams'), load_obj.pop(
         'vae_params'), load_obj.pop('weights'), load_obj.pop('vae_class_name', None), load_obj.pop('version', None)
