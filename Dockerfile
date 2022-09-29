@@ -42,7 +42,7 @@ RUN poetry add taming-transformers-rom1504
 
 RUN poetry add pytorch-lightning==1.7.7
 
-RUN poetry run python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
+# RUN poetry run python -m pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 
 
 ENV DOCKER=true
