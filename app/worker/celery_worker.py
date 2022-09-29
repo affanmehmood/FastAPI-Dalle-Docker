@@ -7,7 +7,8 @@ import time
 
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
-
+    print('test_celery')
+    assert 'Worker is getting called dummy'
     current_task.update_state(state='GENERATING',
                               meta={'Duration': 'unknown'})
     main(word, outputs_dir='/app/dalle_tmp/')
