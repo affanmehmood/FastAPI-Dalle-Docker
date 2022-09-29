@@ -26,8 +26,6 @@ def exists(val):
 # tokenizer
 def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images=128, batch_size=4, top_k=0.9,
          outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False):
-    print('Into the main Flush', flush=True)
-    print('Into the main')
     if exists(bpe_path):
         klass = HugTokenizer if hug else YttmTokenizer
         tokenizer = klass(bpe_path)
@@ -78,7 +76,6 @@ def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images
     texts = text.split('|')
 
     for text in texts:
-        print(f'Into the loop', flush=True)
         if gentxt:
             text_tokens, gen_texts = dalle.generate_texts(tokenizer, text=text, filter_thres=top_k)
             text = gen_texts[0]
@@ -109,7 +106,5 @@ def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images
 
         for i, image in enumerate(outputs):
             save_image(image, outputs_dir / f'{i}.png', normalize=True)
-            with open(outputs_dir / 'caption.txt', 'w') as f:
-                f.write(file_name)
 
         print(f'created {num_images} images at "{str(outputs_dir)}"')
