@@ -9,7 +9,7 @@ RUN apt purge nvidia-*
 RUN apt-get install software-properties-common -y
 RUN add-apt-repository ppa:graphics-drivers/ppa
 RUN apt-get update
-RUN apt-get install nvidia-470
+RUN apt-get install nvidia-470.76
 
 RUN apt-get remove --auto-remove python3
 RUN apt-get -y install python3.7
