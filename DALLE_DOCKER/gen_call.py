@@ -26,7 +26,8 @@ def exists(val):
 # tokenizer
 def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images=128, batch_size=4, top_k=0.9,
          outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False):
-
+    print('Into the main Flush', flush=True)
+    print('Into the main')
     if exists(bpe_path):
         klass = HugTokenizer if hug else YttmTokenizer
         tokenizer = klass(bpe_path)
@@ -107,7 +108,7 @@ def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images
         outputs_dir = Path(outputs_dir)
         outputs_dir.mkdir(parents=True, exist_ok=True)
 
-        for i, image in tqdm(enumerate(outputs), desc='saving images'):
+        for i, image in enumerate(outputs):
             save_image(image, outputs_dir / f'{i}.png', normalize=True)
             with open(outputs_dir / 'caption.txt', 'w') as f:
                 f.write(file_name)
