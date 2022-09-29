@@ -5,6 +5,11 @@ RUN rm /etc/apt/sources.list.d/cuda.list
 RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
 
+RUN apt purge nvidia-*
+RUN add-apt-repository ppa:graphics-drivers/ppa
+RUN apt-get update
+RUN apt-get install nvidia-470
+
 RUN apt-get remove --auto-remove python3
 RUN apt-get -y install python3.7
 RUN apt-get install python3-distutils -y
