@@ -47,7 +47,9 @@ RUN pip install "git+https://github.com/affanmehmood/DALLE-pytorch"
 RUN pip install taming-transformers-rom1504
 
 RUN pip install pytorch-lightning==1.7.7
-
+RUN pip uninstall torch -y
+RUN pip uninstall torchvision -y
+RUN pip uninstall torchaudio -y
 RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113
 
 
