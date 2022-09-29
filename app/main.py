@@ -22,7 +22,6 @@ def background_on_message(task):
 
 @app.get("/{word}")
 async def root(word: str, background_task: BackgroundTasks):
-    task_name = None
 
     # set correct task name based on the way you run the example
     if not bool(os.getenv('DOCKER')):
