@@ -17,7 +17,10 @@ def test_celery(word: str) -> str:
     print('GEN Started')
     current_task.update_state(state='GENERATING',
                               meta={'Status': 'Dalle Running'})
-    print(current_task.state)
+
+    import json
+    state_dict = json.loads(current_task)
+    print(state_dict)
     # print(current_task.task_id)
 
     # main(word, outputs_dir='/app/dalle_tmp/', task_id=current_task)
