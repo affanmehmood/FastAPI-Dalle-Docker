@@ -24,6 +24,6 @@ print('torch.__version__', torch.__version__)
 # input_img_path = "/input/img.jpg"
 # !python /content/DALLE-pytorch/generate.py --dalle_path=$checkpoint_path --text="$text" --num_images=$num_images
 # --batch_size=$batch_size --outputs_dir="$_folder" ; wait;
-def main(text, outputs_dir='/dalle_tmp/', batch_size=1, num_images=1, checkpoint_path="/input/dalle.pt"):
+def main(text, outputs_dir='../dalle_tmp/', batch_size=1, num_images=1, checkpoint_path="/models/dalle.pt"):
     generate_img(dalle_path=checkpoint_path, text=text, num_images=num_images,
                  batch_size=batch_size, outputs_dir=outputs_dir)
