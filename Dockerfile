@@ -34,11 +34,11 @@ RUN pip install huggingface_hub
 RUN pip install omegaconf
 RUN pip install matplotlib==3.5.0
 
-RUN pip install flake8 == 3.8.3
-RUN pip install fastapi == 0.70.0
-RUN pip install hypercorn == 0.13.2
-RUN pip install celery == 5.2.3
-RUN pip install redis == 4.1.0
+RUN pip install flake8==3.8.3
+RUN pip install fastapi==0.70.0
+RUN pip install hypercorn==0.13.2
+RUN pip install celery==5.2.3
+RUN pip install redis==4.1.0
 
 RUN apt-get install git -y
 
