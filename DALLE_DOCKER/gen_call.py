@@ -1,6 +1,6 @@
 from pathlib import Path
 from tqdm import tqdm
-
+import os
 # torch
 
 import torch
@@ -25,7 +25,8 @@ def exists(val):
 
 # tokenizer
 def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images=128, batch_size=4, top_k=0.9,
-         outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False):
+         outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False, task_id=''):
+    outputs_dir = os.path.join(outputs_dir, task_id)
     if exists(bpe_path):
         klass = HugTokenizer if hug else YttmTokenizer
         tokenizer = klass(bpe_path)
@@ -100,9 +101,8 @@ def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images
         print(f'off to saving')
         # save all images
 
-        file_name = text
         outputs_dir = Path(outputs_dir)
-        outputs_dir.mkdir(parents=True, exist_ok=True)
+        outputs_dir.makedirs(parents=True, exist_ok=True)
 
         for i, image in enumerate(outputs):
             save_image(image, outputs_dir / f'{i}.png', normalize=True)

@@ -31,6 +31,5 @@ for path in paths:
 # --batch_size=$batch_size --outputs_dir="$_folder" ; wait;
 def main(text, outputs_dir='/app/dalle_tmp/', batch_size=1, num_images=1,
          checkpoint_path="/app/DALLE_DOCKER/models/dalle.pt", task_id=''):
-    print('TASK ID', task_id)
     generate_img(dalle_path=checkpoint_path, text=text, num_images=num_images,
-                 batch_size=batch_size, outputs_dir=outputs_dir)
+                 batch_size=batch_size, outputs_dir=outputs_dir, task_id='')
