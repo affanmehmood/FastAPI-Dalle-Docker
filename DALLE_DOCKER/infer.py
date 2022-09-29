@@ -7,9 +7,7 @@ import random
 from app.DALLE_DOCKER.gen_call import main as generate_img
 
 import torch
-print('torch.__version__: ', torch.__version__, flush=True)
-print('CUDA AVAILABLE: ', torch.cuda.is_available(), flush=True)
-os.system("nvidia-smi")
+torch.multiprocessing.set_start_method('forkserver')
 
 paths = ['/app/dalle_tmp/', '/app/stable_tmp/']
 for path in paths:

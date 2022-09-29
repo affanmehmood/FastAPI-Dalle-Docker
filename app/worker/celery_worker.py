@@ -4,7 +4,6 @@ from .celery_app import celery_app
 from app.DALLE_DOCKER.infer import main
 import time
 
-
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
     print('GEN Started')
