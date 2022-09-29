@@ -7,7 +7,7 @@ import random
 from app.DALLE_DOCKER.gen_call import main as generate_img
 
 import torch
-print('torch.__version__', torch.__version__)
+print('torch.__version__', torch.__version__, flush=True)
 # run = wandb.init(anonymous="must")
 # artifact_uri = 'img2dataset'  # @param ["img2dataset", "kaggle dataset"] {allow-input: false}
 # if artifact_uri == 'img2dataset':
