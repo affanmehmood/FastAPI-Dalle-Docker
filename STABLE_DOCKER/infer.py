@@ -22,6 +22,7 @@ from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
 
+
 def load_model_from_config(config, ckpt, verbose=False):
     print(f"Loading model from {ckpt}")
     pl_sd = torch.load(ckpt, map_location="cpu")
@@ -101,7 +102,6 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
         with open(from_file, "r") as f:
             data = f.read().splitlines()
             data = list(chunk(data, batch_size))
-
 
     init_image = load_img(initimg).to(device)
     init_image = repeat(init_image, '1 ... -> b ...', b=batch_size)

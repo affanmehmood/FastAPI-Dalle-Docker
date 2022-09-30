@@ -108,3 +108,6 @@ def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images
             save_image(image, outputs_dir / f'{text}.png', normalize=True)
 
         print(f'created {num_images} images at "{str(outputs_dir)}"')
+    del dalle
+    del dalle_params
+    del load_obj
