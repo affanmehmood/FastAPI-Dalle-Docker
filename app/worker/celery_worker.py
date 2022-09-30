@@ -15,12 +15,12 @@ def test_celery(word: str) -> str:
         print('Deleting trash', trash)
         shutil.rmtree('/app/dalle_tmp/' + trash)
 
-    print('GEN Started')
+    print('GEN Started', word, test_celery.request.id)
     current_task.update_state(state='GENERATING',
                               meta={'Status': 'Dalle Running'})
 
     main(word, outputs_dir='/app/dalle_tmp/' + test_celery.request.id + '/')
 
-    while not os.path.isfile('/app/stable_tmp/{}.png'.format(test_celery.request.id)):
-        sleep(3)
+    # while not os.path.isfile('/app/stable_tmp/{}.png'.format(test_celery.request.id)):
+    #     sleep(3)
     return f"Generation completed for {word}"

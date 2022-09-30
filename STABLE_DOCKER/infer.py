@@ -176,11 +176,11 @@ if __name__ == "__main__":
             time.sleep(2)
         else:
             time.sleep(1)
-            print('Stable Diff Triggered')
+
             subfolders = [f.path for f in os.scandir('/app/dalle_tmp/') if f.is_dir()]  # yields full path
             task_id = os.path.basename(os.path.normpath(subfolders[0]))
             onlyfiles = [f for f in listdir(subfolders[0]) if isfile(join(subfolders[0], f))]  # yields only filename
-
+            print('Stable Diff Triggered', onlyfiles[0].split('.')[0], task_id)
             if len(onlyfiles) < 1:
                 print('No file inside ', task_id)
                 time.sleep(2)
@@ -195,10 +195,9 @@ if __name__ == "__main__":
             resized_img = np.array(resize_image(img, size, background_color))
             im = Image.fromarray(resized_img)
             im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
-            if os.path.isfile('/app/dalle_tmp/{}/resized.png'.format(task_id)):
-                main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
+            main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
                      outdir='/app/stable_tmp/', ckpt='/app/STABLE_DOCKER/models/sd-v1-4.ckpt',
                      embedding_path='/app/STABLE_DOCKER/models/embeddings.pt', ddim_eta=0.0,
                      n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
 
-                shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
+            shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
