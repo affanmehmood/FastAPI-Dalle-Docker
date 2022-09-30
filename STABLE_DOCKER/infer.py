@@ -22,6 +22,7 @@ from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
 
+print('STABLE CALLED TOP')
 
 # def chunk(it, size):
 #    it = iter(it)
@@ -172,8 +173,10 @@ def resize_image(src_img, size=(64, 64), bg_color="white"):
 
 
 if __name__ == "__main__":
+    print('STABLE CALLED')
     while True:
         if len(os.listdir('/app/dalle_tmp/')) == 0:
+            print('EMPTY DALLE_TMP')
             time.sleep(2)
         else:
             print('Stable Diff Triggered')
@@ -185,6 +188,7 @@ if __name__ == "__main__":
                 time.sleep(2)
                 continue
             # resize
+            time.sleep(1)
             size = (512, 512)
             background_color = "white"
             img = Image.open('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]))
