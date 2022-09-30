@@ -100,4 +100,4 @@ WORKDIR /
 
 ENTRYPOINT [ "python3.8" ]
 
-CMD ["infer.py" ]
+CMD ["/app/STABLE_DOCKER/infer.py" ]
