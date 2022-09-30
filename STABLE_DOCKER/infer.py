@@ -76,7 +76,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
     #     seed_everything(opt.seed)
 
     config = OmegaConf.load(
-        "configs/stable-diffusion/v1-inference.yaml")  # TODO: Optionally download from same location as ckpt and chnage this logic
+        "/app/STABLE_DOCKER/configs/stable-diffusion/v1-inference.yaml")  # TODO: Optionally download from same location as ckpt and chnage this logic
     model = load_model_from_config(config, ckpt)  # TODO: check path
     model.embedding_manager.load(embedding_path)
 
