@@ -39,7 +39,7 @@ def load_model_from_config(config, ckpt, verbose=False):
 
     model.cuda()
     model.eval()
-    return model
+    return model, pl_sd
 
 
 def load_img(path):
@@ -72,7 +72,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
 
     config = OmegaConf.load(
         "/app/STABLE_DOCKER/configs/stable-diffusion/v1-inference.yaml")  # TODO: Optionally download from same location as ckpt and chnage this logic
-    model = load_model_from_config(config, ckpt)  # TODO: check path
+    model, pl_sd = load_model_from_config(config, ckpt)  # TODO: check path
     model.embedding_manager.load(embedding_path)
 
     # config = OmegaConf.load(f"{opt.config}")
@@ -146,6 +146,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
                 toc = time.time()
 
     del model
+    del pl_sd
     torch.cuda.empty_cache()
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
           f" \nEnjoy. Time: ", toc)
