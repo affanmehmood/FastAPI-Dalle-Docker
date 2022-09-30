@@ -117,7 +117,6 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
     with torch.no_grad():
         with precision_scope("cuda"):
             with model.ema_scope():
-                tic = time.time()
                 all_samples = list()
                 for n in trange(n_iter, desc="Sampling"):
                     for prompts in tqdm(data, desc="data"):
@@ -143,13 +142,14 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
                                 os.path.join(outpath, f"{task_id}.png"))
                         all_samples.append(x_samples)
 
-                toc = time.time()
-
     del model
     del pl_sd
+    del init_latent
+    del sampler
     torch.cuda.empty_cache()
+
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
-          f" \nEnjoy. Time: ", toc)
+          f" \nEnjoy.")
 
 
 def resize_image(src_img, size=(64, 64), bg_color="white"):
