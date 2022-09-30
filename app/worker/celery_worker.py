@@ -17,5 +17,6 @@ def test_celery(word: str) -> str:
     current_task.update_state(state='GENERATING',
                               meta={'Status': 'Dalle Running'})
 
-    main(word, outputs_dir='/app/dalle_tmp/')
-    return f"Generation completed {word}"
+    main(word, outputs_dir='/app/dalle_tmp/', task_id=test_celery.request.id)
+
+    return f"Generation completed for {word}"

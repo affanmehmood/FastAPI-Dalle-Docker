@@ -25,7 +25,7 @@ def exists(val):
 
 # tokenizer
 def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images=128, batch_size=4, top_k=0.9,
-         outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False):
+         outputs_dir='./outputs', bpe_path='', hug=False, chinese=False, taming=False, gentxt=False, task_id=''):
 
     if exists(bpe_path):
         klass = HugTokenizer if hug else YttmTokenizer
@@ -105,6 +105,6 @@ def main(dalle_path, text, vqgan_model_path='', vqgan_config_path='', num_images
         outputs_dir.mkdir(parents=True, exist_ok=True)
 
         for i, image in enumerate(outputs):
-            save_image(image, outputs_dir / f'{i}.png', normalize=True)
+            save_image(image, outputs_dir / f'{task_id}.png', normalize=True)
 
         print(f'created {num_images} images at "{str(outputs_dir)}"')
