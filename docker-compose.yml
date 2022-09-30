@@ -75,7 +75,7 @@ services:
   stable:
     build:
       context: .
-      dockerfile: "/app/STABLE_DOCKER/Dockerfile"
+      dockerfile: "./STABLE_DOCKER/Dockerfile"
     deploy:
       resources:
         reservations:
