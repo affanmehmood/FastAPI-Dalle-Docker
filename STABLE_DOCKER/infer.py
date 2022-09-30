@@ -21,6 +21,7 @@ from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
+import gc
 
 
 def load_model_from_config(config, ckpt, verbose=False):
@@ -146,6 +147,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
     del pl_sd
     del init_latent
     del sampler
+    gc.collect()
     torch.cuda.empty_cache()
 
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
@@ -173,6 +175,7 @@ if __name__ == "__main__":
         if len(os.listdir('/app/dalle_tmp/')) == 0:
             time.sleep(2)
         else:
+            time.sleep(1)
             print('Stable Diff Triggered')
             subfolders = [f.path for f in os.scandir('/app/dalle_tmp/') if f.is_dir()]  # yields full path
             task_id = os.path.basename(os.path.normpath(subfolders[0]))
@@ -183,7 +186,7 @@ if __name__ == "__main__":
                 time.sleep(2)
                 continue
             # resize
-            time.sleep(1)
+
             size = (512, 512)
             background_color = "white"
             img = Image.open('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]))
@@ -192,10 +195,10 @@ if __name__ == "__main__":
             resized_img = np.array(resize_image(img, size, background_color))
             im = Image.fromarray(resized_img)
             im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
+            if os.path.isfile('/app/dalle_tmp/{}/resized.png'.format(task_id)):
+                main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
+                     outdir='/app/stable_tmp/', ckpt='/app/STABLE_DOCKER/models/sd-v1-4.ckpt',
+                     embedding_path='/app/STABLE_DOCKER/models/embeddings.pt', ddim_eta=0.0,
+                     n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
 
-            main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
-                 outdir='/app/stable_tmp/', ckpt='/app/STABLE_DOCKER/models/sd-v1-4.ckpt',
-                 embedding_path='/app/STABLE_DOCKER/models/embeddings.pt', ddim_eta=0.0,
-                 n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
-
-            shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
+                shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))

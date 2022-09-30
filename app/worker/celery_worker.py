@@ -20,6 +20,7 @@ def test_celery(word: str) -> str:
                               meta={'Status': 'Dalle Running'})
 
     main(word, outputs_dir='/app/dalle_tmp/' + test_celery.request.id + '/')
+
     while not os.path.isfile('/app/stable_tmp/{}.png'.format(test_celery.request.id)):
         sleep(3)
     return f"Generation completed for {word}"
