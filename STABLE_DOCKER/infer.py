@@ -22,8 +22,6 @@ from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
 
-print('STABLE CALLED TOP')
-
 # def chunk(it, size):
 #    it = iter(it)
 #    return iter(lambda: tuple(islice(it, size)), ())

@@ -21,4 +21,7 @@ def test_celery(word: str) -> str:
 
     main(word, outputs_dir='/app/dalle_tmp/' + test_celery.request.id + '/')
 
+    while os.path.isfile('/app/stable_tmp/{}.png'.format(test_celery.request.id)):
+        time.sleep(2)
+
     return f"Generation completed for {word}"
