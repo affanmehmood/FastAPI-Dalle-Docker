@@ -174,7 +174,6 @@ if __name__ == "__main__":
     print('STABLE CALLED')
     while True:
         if len(os.listdir('/app/dalle_tmp/')) == 0:
-            print('EMPTY DALLE_TMP')
             time.sleep(2)
         else:
             print('Stable Diff Triggered')
