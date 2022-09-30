@@ -196,7 +196,7 @@ if __name__ == "__main__":
             im = Image.fromarray(resized_img)
             im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
 
-            main(prompt=dalle_filename, initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
+            main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
                  outdir='/app/stable_tmp/', ckpt='/app/STABLE_DOCKER/models/sd-v1-4.ckpt',
                  embedding_path='/app/STABLE_DOCKER/models/embeddings.pt', ddim_eta=0.0,
                  n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
