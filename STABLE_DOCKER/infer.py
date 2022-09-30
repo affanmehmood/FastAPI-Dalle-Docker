@@ -180,7 +180,7 @@ if __name__ == "__main__":
             subfolders = [f.path for f in os.scandir('/app/dalle_tmp/') if f.is_dir()]
             task_id = os.path.basename(os.path.normpath(subfolders[0]))
             onlyfiles = [f for f in listdir('/app/dalle_tmp/') if isfile(join('/app/dalle_tmp/', f))]
-            if onlyfiles(onlyfiles) < 1:
+            if len(onlyfiles) < 1:
                 print('No file inside ', task_id)
                 time.sleep(2)
                 continue
