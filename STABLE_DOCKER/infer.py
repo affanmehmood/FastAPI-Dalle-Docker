@@ -182,6 +182,8 @@ if __name__ == "__main__":
             onlyfiles = [f for f in listdir('/app/dalle_tmp/') if isfile(join('/app/dalle_tmp/', f))]
             if onlyfiles(onlyfiles) < 1:
                 print('No file inside ', task_id)
+                time.sleep(2)
+                continue
             # resize
             size = (512, 512)
             background_color = "white"
