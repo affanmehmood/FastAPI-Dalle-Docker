@@ -21,15 +21,6 @@ from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
-import docker
-import os
-import time
-
-client = docker.from_env()
-# def chunk(it, size):
-#    it = iter(it)
-#    return iter(lambda: tuple(islice(it, size)), ())
-
 
 def load_model_from_config(config, ckpt, verbose=False):
     print(f"Loading model from {ckpt}")
