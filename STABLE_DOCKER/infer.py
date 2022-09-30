@@ -184,7 +184,7 @@ if __name__ == "__main__":
             # resize
             size = (512, 512)
             background_color = "white"
-            img = Image.open('/app/dalle_tmp/{}/{}'.format(task_id, only_files[0]))
+            img = Image.open('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]))
             # resize the image
             resized_img = np.array(resize_image(img, size, background_color))
             im = Image.fromarray(img_arr)
