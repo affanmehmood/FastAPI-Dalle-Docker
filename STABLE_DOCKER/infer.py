@@ -193,7 +193,7 @@ if __name__ == "__main__":
 
             # resize the image
             resized_img = np.array(resize_image(img, size, background_color))
-            im = Image.fromarray(img)
+            im = Image.fromarray(resized_img)
             im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
 
             main(prompt=dalle_filename, initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
