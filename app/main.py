@@ -38,8 +38,8 @@ async def root(word: str, background_task: BackgroundTasks):
 async def get_status(task_id: str):
     res = AsyncResult(task_id)
 
-    if os.path.isfile('/app/stable_temp/{}.png'.format(task_id)):
-        return FileResponse('/app/stable_temp/{}.png'.format(task_id))
+    if os.path.isfile('/app/stable_tmp/{}.png'.format(task_id)):
+        return FileResponse('/app/stable_tmp/{}.png'.format(task_id))
     elif res.state == 'SUCCESS':
         return {"progress": {
             'state': 'Running Stable Diffusion',
