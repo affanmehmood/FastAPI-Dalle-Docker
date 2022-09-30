@@ -3,7 +3,7 @@ import logging
 from threading import Thread
 from celery.result import AsyncResult
 from fastapi import FastAPI, BackgroundTasks
-
+from fastapi.responses import FileResponse
 from worker.celery_app import celery_app
 
 
@@ -37,8 +37,11 @@ async def root(word: str, background_task: BackgroundTasks):
 @app.get("/get_progress/{task_id}")
 async def get_status(task_id: str):
     res = AsyncResult(task_id)
-    print('res', res)
-    return {"progress": {
-        'state': res.state,
-        'meta': res.result
-    }}
+
+    if os.path.isfile('/app/stable_temp/{}.png'.format(task_id)):
+        return FileResponse('/app/stable_temp/{}.png'.format(task_id))
+    elif res.state == 'SUCCESS':
+        return {"progress": {
+            'state': res.state,
+            'meta': res.result
+        }}
