@@ -21,7 +21,11 @@ from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
+import docker
+import os
+import time
 
+client = docker.from_env()
 # def chunk(it, size):
 #    it = iter(it)
 #    return iter(lambda: tuple(islice(it, size)), ())
@@ -151,6 +155,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
                 toc = time.time()
 
     del model
+    torch.cuda.empty_cache()
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
           f" \nEnjoy. Time: ", toc)
 
@@ -172,7 +177,6 @@ def resize_image(src_img, size=(64, 64), bg_color="white"):
 
 
 if __name__ == "__main__":
-    print('STABLE CALLED')
     while True:
         if len(os.listdir('/app/dalle_tmp/')) == 0:
             time.sleep(2)
