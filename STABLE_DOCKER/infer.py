@@ -180,7 +180,8 @@ if __name__ == "__main__":
             subfolders = [f.path for f in os.scandir('/app/dalle_tmp/') if f.is_dir()]
             task_id = os.path.basename(os.path.normpath(subfolders[0]))
             onlyfiles = [f for f in listdir('/app/dalle_tmp/') if isfile(join('/app/dalle_tmp/', f))]
-
+            print('subfolders', subfolders)
+            print('onlyfiles', onlyfiles)
             # resize
             size = (512, 512)
             background_color = "white"

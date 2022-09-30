@@ -4,15 +4,16 @@ import time
 from app.DALLE_DOCKER.infer import main
 from celery import current_task
 from time import sleep
+import shutil
 
 from .celery_app import celery_app
 
 
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
-    files = glob.glob('/app/dalle_tmp/*')
-    for f in files:
-        os.remove(f)
+    for trash in [name for name in os.listdir('/app/dalle_tmp/')]:
+        shutil.rmtree('/app/dalle_tmp/' + trash)
+
     print('GEN Started')
     current_task.update_state(state='GENERATING',
                               meta={'Status': 'Dalle Running'})
