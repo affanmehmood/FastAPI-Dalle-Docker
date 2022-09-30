@@ -5,6 +5,7 @@ import torch
 import numpy as np
 from os import listdir
 import shutil
+from numba import cuda
 from os.path import isfile, join
 from omegaconf import OmegaConf
 from PIL import Image
@@ -150,6 +151,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
 
                 toc = time.time()
 
+    del model
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
           f" \nEnjoy. Time: ", toc)
 
