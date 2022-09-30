@@ -145,7 +145,7 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=Fal
                         for x_sample in x_samples:
                             x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                             Image.fromarray(x_sample.astype(np.uint8)).save(
-                                os.path.join(outpath, f"{task_id}.jpg"))
+                                os.path.join(outpath, f"{task_id}.png"))
                         all_samples.append(x_samples)
 
                 toc = time.time()

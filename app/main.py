@@ -42,6 +42,12 @@ async def get_status(task_id: str):
         return FileResponse('/app/stable_temp/{}.png'.format(task_id))
     elif res.state == 'SUCCESS':
         return {"progress": {
+            'state': 'Running Stable Diffusion',
+            'meta': 'Generating'
+        }}
+    else:
+        return {"progress": {
             'state': res.state,
             'meta': res.result
         }}
+
