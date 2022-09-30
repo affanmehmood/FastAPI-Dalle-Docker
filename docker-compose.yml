@@ -72,6 +72,20 @@ services:
       - "./:/app"
     command: "poetry run celery -A app.app.worker.celery_worker worker -l info -Q test-queue -c 1"
 
+    stable:
+      build:
+        context: .
+        dockerfile: "/app/STABLE_DOCKER/Dockerfile"
+      deploy:
+        resources:
+          reservations:
+            devices:
+              - driver: nvidia
+                count: 1
+                capabilities: [ gpu ]
+      volumes:
+        - "./:/app"
+
 volumes:
   rabbitmq_data:
     driver: local

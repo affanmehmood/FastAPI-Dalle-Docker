@@ -4,6 +4,7 @@ import PIL
 import torch
 import numpy as np
 from os import listdir
+import shutil
 from os.path import isfile, join
 from omegaconf import OmegaConf
 from PIL import Image
@@ -69,10 +70,9 @@ def load_img(path):
         return 2. * image - 1.
 
 
-def main(prompt, initimg, outdir, ckpt, embedding_path, skip_grid=True, ddim_steps=200, plms=False,
+def main(prompt, initimg, outdir, ckpt, embedding_path, ddim_steps=200, plms=False,
          ddim_eta=0.0, n_iter=1, n_samples=2, n_rows=0, scale=5.0, strength=0.55, from_file=None,
-         precision="autocast"):
-
+         precision="autocast", task_id=''):
     # opt = parser.parse_args()
     #     seed_everything(opt.seed)
 
@@ -108,10 +108,6 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, skip_grid=True, ddim_ste
             data = f.read().splitlines()
             data = list(chunk(data, batch_size))
 
-    sample_path = os.path.join(outpath, "samples")
-    os.makedirs(sample_path, exist_ok=True)
-    base_count = len(os.listdir(sample_path))
-    grid_count = len(os.listdir(outpath)) - 1
 
     init_image = load_img(initimg).to(device)
     init_image = repeat(init_image, '1 ... -> b ...', b=batch_size)
@@ -150,20 +146,8 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, skip_grid=True, ddim_ste
                         for x_sample in x_samples:
                             x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                             Image.fromarray(x_sample.astype(np.uint8)).save(
-                                os.path.join(sample_path, f"{base_count:04}.jpg"))
-                            base_count += 1
+                                os.path.join(outpath, f"{task_id}.jpg"))
                         all_samples.append(x_samples)
-
-                if not skip_grid:
-                    # additionally, save as grid
-                    grid = torch.stack(all_samples, 0)
-                    grid = rearrange(grid, 'n b c h w -> (n b) c h w')
-                    grid = make_grid(grid, nrow=n_rows)
-
-                    # to image
-                    grid = 255. * rearrange(grid, 'c h w -> h w c').cpu().numpy()
-                    Image.fromarray(grid.astype(np.uint8)).save(os.path.join(outpath, f'grid-{grid_count:04}.png'))
-                    grid_count += 1
 
                 toc = time.time()
 
@@ -171,17 +155,44 @@ def main(prompt, initimg, outdir, ckpt, embedding_path, skip_grid=True, ddim_ste
           f" \nEnjoy. Time: ", toc)
 
 
+def resize_image(src_img, size=(64, 64), bg_color="white"):
+    from PIL import Image
+
+    # rescale the image so the longest edge is the right size
+    src_img.thumbnail(size, Image.ANTIALIAS)
+
+    # Create a new image of the right shape
+    new_image = Image.new("RGB", size, bg_color)
+
+    # Paste the rescaled image onto the new centered background
+    new_image.paste(src_img, (int((size[0] - src_img.size[0]) / 2), int((size[1] - src_img.size[1]) / 2)))
+
+    # return the resized image
+    return new_image
+
+
 if __name__ == "__main__":
     while True:
-        if len(os.listdir('../dalle_tmp/')) == 0:
+        if len(os.listdir('/app/dalle_tmp/')) == 0:
             time.sleep(2)
         else:
-            onlyfiles = [f for f in listdir('../dalle_tmp/') if isfile(join('../dalle_tmp/', f))]
+            print('Stable Diff Triggered')
+            subfolders = [f.path for f in os.scandir('/app/dalle_tmp/') if f.is_dir()]
+            task_id = os.path.basename(os.path.normpath(subfolders[0]))
+            onlyfiles = [f for f in listdir('/app/dalle_tmp/') if isfile(join('/app/dalle_tmp/', f))]
 
-            dalle_filename = os.path.splitext(onlyfiles[0])[0]
-            dalle_ext = os.path.splitext(onlyfiles[0])[1]
+            # resize
+            size = (512, 512)
+            background_color = "white"
+            img = Image.open('/app/dalle_tmp/{}/{}'.format(task_id, only_files[0]))
+            # resize the image
+            resized_img = np.array(resize_image(img, size, background_color))
+            im = Image.fromarray(img_arr)
+            im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
 
-            main(prompt=dalle_filename, initimg='../dalle_tmp/{}.{}'
-                 .format(dalle_filename, dalle_ext), outdir='../stable_tmp/',
-                 ckpt='models/sd-v1-4.ckpt', embedding_path='models/embeddings.pt', ddim_eta=0.0,
-                 n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55)
+            main(prompt=dalle_filename, initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
+                 outdir='/app/stable_tmp/', ckpt='/app/STABLE_DOCKER/models/sd-v1-4.ckpt',
+                 embedding_path='/app/STABLE_DOCKER/models/embeddings.pt', ddim_eta=0.0,
+                 n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
+
+            shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
