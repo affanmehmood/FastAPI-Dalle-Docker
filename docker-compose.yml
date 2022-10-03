@@ -10,6 +10,9 @@ services:
       - "15672:15672"
     volumes:
       - "rabbitmq_data:/bitnami"
+    environment:
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=bitnami
 
   redis:
     image: "bitnami/redis:5.0.4"
