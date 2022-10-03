@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   rabbitmq:
-    image: "bitnami/rabbitmq:3.7"
+    image: "bitnami/rabbitmq:3.8.9-debian-10-r64"
     ports:
       - "4369:4369"
       - "5672:5672"
