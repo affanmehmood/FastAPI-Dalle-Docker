@@ -66,7 +66,7 @@ services:
     depends_on:
       - rabbitmq
       - redis
-      - stable
+#      - stable
     volumes:
       - "./:/app"
     command: "poetry run hypercorn app/app/main:app --bind 0.0.0.0:8000 --reload"
@@ -83,7 +83,7 @@ services:
     depends_on:
       - rabbitmq
       - redis
-      - stable
+#      - stable
     volumes:
       - "./:/app"
     command: "poetry run celery -A app.app.worker.celery_worker worker -l info -Q test-queue -c 1"
