@@ -205,4 +205,4 @@ if __name__ == "__main__":
                  n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
 
             shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
-            break
+            exit()
