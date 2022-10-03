@@ -5,13 +5,13 @@ RUN rm /etc/apt/sources.list.d/nvidia-ml.list
 
 RUN apt-get update && apt-get install --no-install-recommends --no-install-suggests -y curl
 
-
 RUN apt-get remove --auto-remove python3
-RUN apt-get -y install python3.7
+RUN apt-get -y install python3.8
 RUN apt-get install python3-distutils -y
 RUN apt-get install python3-apt -y
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-RUN python3.7 get-pip.py
+RUN python3.8 get-pip.py
+
 
 RUN apt-get install unzip
 
