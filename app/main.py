@@ -41,7 +41,7 @@ async def get_status(task_id: str):
     res = AsyncResult(task_id)
 
     if os.path.isdir('/app/dalle_tmp/{}/'.format(task_id)):
-        return '/app/dalle_tmp/{}.png'.format([f for f in listdir('/app/dalle_tmp/{}/'.format(task_id)) if isfile(join('/app/dalle_tmp/{}/'.format(task_id), f))][0])
+        return FileResponse('/app/dalle_tmp/{}.png'.format([f for f in listdir('/app/dalle_tmp/{}/'.format(task_id)) if isfile(join('/app/dalle_tmp/{}/'.format(task_id), f))][0]))
     elif res.state != 'SUCCESS':
         return {"progress": {
             'state': 'Running DALLE',
