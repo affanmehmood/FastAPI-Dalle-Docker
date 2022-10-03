@@ -54,6 +54,7 @@ services:
               capabilities: [ gpu ]
     volumes:
       - "./:/app"
+    restart: always
 
   fastapi:
     build: .
