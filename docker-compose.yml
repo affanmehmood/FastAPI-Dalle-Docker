@@ -23,10 +23,10 @@ services:
   celery-flower:
     image: gregsi/latest-celery-flower-docker:latest
     environment:
-      - AMQP_USERNAME=user
-      - AMQP_PASSWORD=bitnami
-      - AMQP_ADMIN_USERNAME=user
-      - AMQP_ADMIN_PASSWORD=bitnami
+      - AMQP_USERNAME=guest
+      - AMQP_PASSWORD=guest
+      - AMQP_ADMIN_USERNAME=guest
+      - AMQP_ADMIN_PASSWORD=guest
       - AMQP_HOST=rabbitmq
       - AMQP_PORT=5672
       - AMQP_ADMIN_HOST=rabbitmq
