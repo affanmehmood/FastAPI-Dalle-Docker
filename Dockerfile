@@ -34,7 +34,6 @@ RUN poetry add wandb
 RUN poetry add huggingface_hub
 RUN poetry add omegaconf
 RUN poetry add matplotlib==3.5.0
-RUN poetry add celery==5.2.7
 
 RUN apt-get install git -y
 
