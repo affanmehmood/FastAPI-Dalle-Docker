@@ -33,16 +33,18 @@ async def root(word: str, background_task: BackgroundTasks):
 
     return {"task_id": task.task_id}
 
+from os import listdir
+from os.path import isfile, join
 
 @app.get("/get_progress/{task_id}")
 async def get_status(task_id: str):
     res = AsyncResult(task_id)
 
-    if os.path.isfile('/app/stable_tmp/{}.png'.format(task_id)):
-        return FileResponse('/app/stable_tmp/{}.png'.format(task_id))
-    elif res.state == 'SUCCESS':
+    if os.path.isdir('/app/dalle_tmp/{}/'.format(task_id)):
+        return '/app/dalle_tmp/{}.png'.format([f for f in listdir('/app/dalle_tmp/{}/'.format(task_id)) if isfile(join('/app/dalle_tmp/{}/'.format(task_id), f))][0])
+    elif res.state != 'SUCCESS':
         return {"progress": {
-            'state': 'Running Stable Diffusion',
+            'state': 'Running DALLE',
             'meta': 'Generating'
         }}
     else:
@@ -50,4 +52,20 @@ async def get_status(task_id: str):
             'state': res.state,
             'meta': res.result
         }}
+
+
+    # if os.path.isfile('/app/stable_tmp/{}.png'.format(task_id)):
+    #     return FileResponse('/app/stable_tmp/{}.png'.format(task_id))
+    # elif res.state == 'SUCCESS':
+    #     return {"progress": {
+    #         'state': 'Running Stable Diffusion',
+    #         'meta': 'Generating'
+    #     }}
+    # else:
+    #     return {"progress": {
+    #         'state': res.state,
+    #         'meta': res.result
+    #     }}
+    #
+
 

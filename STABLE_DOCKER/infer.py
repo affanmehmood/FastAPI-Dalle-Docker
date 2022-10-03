@@ -178,6 +178,10 @@ if __name__ == "__main__":
             time.sleep(1)
 
             subfolders = [f.path for f in os.scandir('/app/dalle_tmp/') if f.is_dir()]  # yields full path
+            if len(subfolders) < 1:
+                print('No folder inside')
+                time.sleep(2)
+                continue
             task_id = os.path.basename(os.path.normpath(subfolders[0]))
             onlyfiles = [f for f in listdir(subfolders[0]) if isfile(join(subfolders[0], f))]  # yields only filename
             print('Stable Diff Triggered', onlyfiles[0].split('.')[0], task_id)
