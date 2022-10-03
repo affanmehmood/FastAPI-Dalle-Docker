@@ -11,9 +11,8 @@ from .celery_app import celery_app
 
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
-    for trash in [name for name in os.listdir('/app/dalle_tmp/')]:
-        print('Deleting trash', trash)
-        shutil.rmtree('/app/dalle_tmp/' + trash)
+    # for trash in [name for name in os.listdir('/app/dalle_tmp/')]:
+    #     shutil.rmtree('/app/dalle_tmp/' + trash)
 
     print('GEN Started', word, test_celery.request.id)
     current_task.update_state(state='GENERATING',
