@@ -181,6 +181,8 @@ def update_running_state_stable(state):
 
 
 def check_dalle_running_state():
+    if not os.path.exists("/app/mutex.json"):
+        return False
     with open("/app/mutex.json", "r") as jsonFile:
         data = json.load(jsonFile)
     return data['dalle']
