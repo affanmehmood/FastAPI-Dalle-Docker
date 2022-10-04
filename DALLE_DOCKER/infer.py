@@ -7,12 +7,15 @@ import random
 from app.DALLE_DOCKER.gen_call import main as generate_img
 
 import torch
+
 torch.multiprocessing.set_start_method('forkserver')
 
 paths = ['/app/dalle_tmp/', '/app/stable_tmp/']
 for path in paths:
     if not os.path.exists(path):
         os.mkdir(path)
+
+
 # run = wandb.init(anonymous="must")
 # artifact_uri = 'img2dataset'  # @param ["img2dataset", "kaggle dataset"] {allow-input: false}
 # if artifact_uri == 'img2dataset':
@@ -29,7 +32,10 @@ for path in paths:
 # input_img_path = "/input/img.jpg"
 # !python /content/DALLE-pytorch/generate.py --dalle_path=$checkpoint_path --text="$text" --num_images=$num_images
 # --batch_size=$batch_size --outputs_dir="$_folder" ; wait;
-def main(text, outputs_dir='/app/dalle_tmp/', batch_size=1, num_images=1,
-         checkpoint_path="/app/DALLE_DOCKER/models/dalle.pt"):
-    generate_img(dalle_path=checkpoint_path, text=text, num_images=num_images,
-                 batch_size=batch_size, outputs_dir=outputs_dir)
+
+
+if __name__ == '__main__':
+    def main(text, outputs_dir='/app/dalle_tmp/', batch_size=1, num_images=1,
+             checkpoint_path="/app/DALLE_DOCKER/models/dalle.pt"):
+        generate_img(dalle_path=checkpoint_path, text=text, num_images=num_images,
+                     batch_size=batch_size, outputs_dir=outputs_dir)

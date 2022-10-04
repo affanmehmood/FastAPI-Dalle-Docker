@@ -170,10 +170,30 @@ def resize_image(src_img, size=(64, 64), bg_color="white"):
     return new_image
 
 
+def update_running_state_stable(state):
+    json_file = {
+        'stable': state,
+        'dalle': False
+    }
+
+    with open("mutex.json", "w") as jsonFile:
+        json.dump(json_file, jsonFile)
+
+
+def check_dalle_running_state():
+    with open("/app/mutex.json", "r") as jsonFile:
+        data = json.load(jsonFile)
+    return data['dalle']
+
+
 if __name__ == "__main__":
     while True:
+        if check_dalle_running_state():
+            time.sleep(2)
+            continue
         if len(os.listdir('/app/dalle_tmp/')) == 0:
             time.sleep(2)
+            continue
         else:
             time.sleep(1)
 
@@ -193,8 +213,9 @@ if __name__ == "__main__":
                 print('No file inside ', task_id)
                 time.sleep(2)
                 continue
-            # resize
 
+            update_running_state_stable(True)
+            # resize
             size = (512, 512)
             background_color = "white"
             img = Image.open('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]))
@@ -207,6 +228,6 @@ if __name__ == "__main__":
                  outdir='/app/stable_tmp/', ckpt='/app/STABLE_DOCKER/models/sd-v1-4.ckpt',
                  embedding_path='/app/STABLE_DOCKER/models/embeddings.pt', ddim_eta=0.0,
                  n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
-
+            update_running_state_stable(False)
             shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
             exit()
