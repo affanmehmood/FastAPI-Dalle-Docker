@@ -1,7 +1,7 @@
 import glob
 import os
 import time
-from DALLE_DOCKER.infer import main
+from app.DALLE_DOCKER.infer import main
 from celery import current_task
 from time import sleep
 import shutil
