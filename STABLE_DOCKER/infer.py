@@ -22,6 +22,7 @@ from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 import random
 import gc
+import json
 
 
 def load_model_from_config(config, ckpt, verbose=False):

@@ -5,6 +5,7 @@ from app.DALLE_DOCKER.infer import main
 from celery import current_task
 from time import sleep
 import shutil
+import json
 
 from .celery_app import celery_app
 
