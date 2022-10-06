@@ -34,7 +34,6 @@ RUN poetry add wandb
 RUN poetry add huggingface_hub
 RUN poetry add omegaconf
 RUN poetry add matplotlib==3.5.0
-R
 
 RUN poetry add  "git+https://github.com/affanmehmood/DALLE-pytorch"
 # RUN git clone https://github.com/affanmehmood/taming-transformers --quiet
@@ -42,6 +41,7 @@ RUN poetry add taming-transformers-rom1504
 
 RUN poetry add pytorch-lightning==1.7.7
 RUN poetry add celery==3.1.17
+
 ENV DOCKER=true
 
 EXPOSE 8000
