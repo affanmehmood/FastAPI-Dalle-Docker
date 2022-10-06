@@ -40,7 +40,6 @@ RUN poetry add  "git+https://github.com/affanmehmood/DALLE-pytorch"
 RUN poetry add taming-transformers-rom1504
 
 RUN poetry add pytorch-lightning==1.7.7
-RUN poetry add celery==3.1.17
 
 ENV DOCKER=true
 
