@@ -12,6 +12,9 @@ if not bool(os.getenv('DOCKER')): # if running example without docker
     )
     celery_app.conf.task_routes = {
         "app.worker.celery_worker.test_celery": "test-queue"}
+    response = celery_app.control.enable_events(reply=True)
+    print('RESPONSE TAG', response, flush=True)
+
 else: # running example with docker
     celery_app = Celery(
         "worker",
@@ -20,5 +23,4 @@ else: # running example with docker
     )
     celery_app.conf.task_routes = {
         "app.app.worker.celery_worker.test_celery": "test-queue"}
-
 celery_app.conf.update(task_track_started=True)
