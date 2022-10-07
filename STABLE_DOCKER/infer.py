@@ -118,9 +118,9 @@ if __name__ == "__main__":
                 stored_params = json.load(jsonFile)
             stable_params = stored_params['stable']
             main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
-                 outdir='/app/stable_tmp/', model=model, device=device, ddim_eta=stored_params['ddim_eta'],
-                 n_samples=stored_params['n_samples'], n_iter=stored_params['n_iter'], scale=stored_params['scale'],
-                 ddim_steps=stored_params['ddim_steps'], strength=stored_params['strength'], task_id=task_id)
+                 outdir='/app/stable_tmp/', model=model, device=device, ddim_eta=stable_params['ddim_eta'],
+                 n_samples=stable_params['n_samples'], n_iter=stable_params['n_iter'], scale=stable_params['scale'],
+                 ddim_steps=stable_params['ddim_steps'], strength=stable_params['strength'], task_id=task_id)
             update_running_state_stable(False)
             shutil.copy2('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]), '/app/stable_tmp/{}/dalle.png'.format(task_id))
             shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
