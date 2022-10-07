@@ -5,7 +5,7 @@ import shutil
 from os.path import isfile, join
 import os
 from PIL import Image
-from STABLE_DOCKER.img2img import main
+from img2img import main
 from omegaconf import OmegaConf
 from ldm.util import instantiate_from_config
 import torch
