@@ -9,7 +9,7 @@ from img2img import main
 from omegaconf import OmegaConf
 from ldm.util import instantiate_from_config
 import torch
-
+import numpy as np
 
 def load_model_from_config(config, ckpt, verbose=False):
     print(f"Loading model from {ckpt}")
