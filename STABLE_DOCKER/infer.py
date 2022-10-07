@@ -48,13 +48,13 @@ def resize_image(src_img, size=(64, 64), bg_color="white"):
 
 
 def update_running_state_stable(state):
-    json_file = {
+    json_obj = {
         'stable': state,
         'dalle': False
     }
 
     with open("mutex.json", "w") as jsonFile:
-        json.dump(json_file, jsonFile)
+        json.dump(json_obj, jsonFile)
 
 
 def check_dalle_running_state():
@@ -89,6 +89,10 @@ if __name__ == "__main__":
                 time.sleep(2)
                 continue
             task_id = os.path.basename(os.path.normpath(subfolders[0]))
+            if not os.path.exists("app/param_tmp/{}.json".format(task_id)):
+                print('params file not found')
+                time.sleep(2)
+                continue
             if isfile('/app/dalle_tmp/{}/{}'.format(task_id, 'resized.png')):
                 print('deleting trash')
                 shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
@@ -110,9 +114,13 @@ if __name__ == "__main__":
             resized_img = np.array(resize_image(img, size, background_color))
             im = Image.fromarray(resized_img)
             im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
+            with open("app/param_tmp/{}.json".format(task_id), "r") as jsonFile:
+                stored_params = json.load(jsonFile)
+            stable_params = stored_params['stable']
             main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
-                 outdir='/app/stable_tmp/', model=model, device=device, ddim_eta=0.0,
-                 n_samples=5, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
+                 outdir='/app/stable_tmp/', model=model, device=device, ddim_eta=stored_params['ddim_eta'],
+                 n_samples=stored_params['n_samples'], n_iter=stored_params['n_iter'], scale=stored_params['scale'],
+                 ddim_steps=stored_params['ddim_steps'], strength=stored_params['strength'], task_id=task_id)
             update_running_state_stable(False)
             shutil.copy2('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]), '/app/stable_tmp/{}/dalle.png'.format(task_id))
             shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))

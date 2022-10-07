@@ -34,29 +34,17 @@ def load_img(path):
         return 2. * image - 1.
 
 
-def main(prompt, initimg, outdir, model, device, ddim_steps=200, plms=False,
-         ddim_eta=0.0, n_iter=1, n_samples=5, scale=5.0, strength=0.55, from_file=None,
+def main(prompt, initimg, outdir, model, device, ddim_steps=200,
+         ddim_eta=0.0, n_iter=1, n_samples=5, scale=5.0, strength=0.55,
          precision="autocast", task_id=''):
-    # opt = parser.parse_args()
-    #     seed_everything(opt.seed)
 
-    if plms:
-        raise NotImplementedError("PLMS sampler not (yet) supported")
-        sampler = PLMSSampler(model)
-    else:
-        sampler = DDIMSampler(model)
+    sampler = DDIMSampler(model)
     outpath = os.path.join(outdir, task_id)
     os.makedirs(outpath, exist_ok=True)
 
     batch_size = n_samples
-    if not from_file:
-        assert prompt is not None
-        data = [batch_size * [prompt]]
-
-    else:
-        with open(from_file, "r") as f:
-            data = f.read().splitlines()
-            data = list(chunk(data, batch_size))
+    assert prompt is not None
+    data = [batch_size * [prompt]]
 
     init_image = load_img(initimg).to(device)
     init_image = repeat(init_image, '1 ... -> b ...', b=batch_size)
@@ -104,4 +92,3 @@ def main(prompt, initimg, outdir, model, device, ddim_steps=200, plms=False,
     # torch.cuda.empty_cache()
 
     print("Stable Done")
-
