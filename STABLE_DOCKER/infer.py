@@ -112,7 +112,7 @@ if __name__ == "__main__":
             im.save('/app/dalle_tmp/{}/resized.png'.format(task_id))
             main(prompt=onlyfiles[0].split('.')[0], initimg='/app/dalle_tmp/{}/resized.png'.format(task_id),
                  outdir='/app/stable_tmp/', model=model, device=device, ddim_eta=0.0,
-                 n_samples=1, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
+                 n_samples=5, n_iter=1, scale=10.0, ddim_steps=50, strength=0.55, task_id=task_id)
             update_running_state_stable(False)
             shutil.copy2('/app/dalle_tmp/{}/{}'.format(task_id, onlyfiles[0]), '/app/stable_tmp/{}/dalle.png'.format(task_id))
             shutil.rmtree('/app/dalle_tmp/{}/'.format(task_id))
