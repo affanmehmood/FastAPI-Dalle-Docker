@@ -63,7 +63,7 @@ from os import listdir
 from os.path import isfile, join
 
 
-@app.get("/get_progress/{task_id}/{img_type}")
+@app.get("/get_progress/{task_id}")
 async def get_status(task_id: str):
     res = AsyncResult(task_id)
 
