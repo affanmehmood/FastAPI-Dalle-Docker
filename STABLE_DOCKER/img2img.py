@@ -35,7 +35,7 @@ def load_img(path):
 
 
 def main(prompt, initimg, outdir, model, device, ddim_steps=200, plms=False,
-         ddim_eta=0.0, n_iter=1, n_samples=2, scale=5.0, strength=0.55, from_file=None,
+         ddim_eta=0.0, n_iter=1, n_samples=5, scale=5.0, strength=0.55, from_file=None,
          precision="autocast", task_id=''):
     # opt = parser.parse_args()
     #     seed_everything(opt.seed)
@@ -45,9 +45,8 @@ def main(prompt, initimg, outdir, model, device, ddim_steps=200, plms=False,
         sampler = PLMSSampler(model)
     else:
         sampler = DDIMSampler(model)
-
-    os.makedirs(outdir, exist_ok=True)
-    outpath = outdir
+    outpath = os.path.join(outdir, task_id)
+    os.makedirs(outpath, exist_ok=True)
 
     batch_size = n_samples
     if not from_file:
@@ -91,10 +90,10 @@ def main(prompt, initimg, outdir, model, device, ddim_steps=200, plms=False,
                         x_samples = model.decode_first_stage(samples)
                         x_samples = torch.clamp((x_samples + 1.0) / 2.0, min=0.0, max=1.0)
 
-                        for x_sample in x_samples:
+                        for index, x_sample in enumerate(x_samples):
                             x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                             Image.fromarray(x_sample.astype(np.uint8)).save(
-                                os.path.join(outpath, f"{task_id}.png"))
+                                os.path.join(outpath, f"{index}.png"))
                         all_samples.append(x_samples)
 
     # del model
