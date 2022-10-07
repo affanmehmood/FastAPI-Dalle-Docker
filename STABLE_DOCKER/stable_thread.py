@@ -1,5 +1,5 @@
 from threading import Thread
-from infer import main
+from img2img import main
 import argparse, os, sys, glob
 import PIL
 import torch
