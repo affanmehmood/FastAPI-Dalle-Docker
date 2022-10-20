@@ -70,11 +70,11 @@ RUN apt-get install git -y
 
 
 # RUN pip3 install pillow==9.0.1
-RUN git clone https://github.com/affanmehmood/taming-transformers --quiet
+RUN git clone https://github.com/Candibox-AI/taming-transformers --quiet
 RUN pip3 install -e taming-transformers --quiet
 RUN pip3 install omegaconf einops pytorch-lightning test-tube transformers kornia -e git+https://github.com/openai/CLIP.git@main#egg=clip
 
-RUN git clone https://github.com/affanmehmood/Stable-textual-inversion_win.git
+RUN git clone https://github.com/Candibox-AI/Stable-textual-inversion_win.git
 RUN pip3 install -e Stable-textual-inversion_win --quiet
 
 # RUN pip3 uninstall torch -y

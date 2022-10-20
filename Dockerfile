@@ -35,7 +35,7 @@ RUN poetry add huggingface_hub
 RUN poetry add omegaconf
 RUN poetry add matplotlib==3.5.0
 
-RUN poetry add  "git+https://github.com/affanmehmood/DALLE-pytorch"
+RUN poetry add  "git+https://github.com/Candibox-AI/DALLE-pytorch"
 # RUN git clone https://github.com/affanmehmood/taming-transformers --quiet
 RUN poetry add taming-transformers-rom1504
 

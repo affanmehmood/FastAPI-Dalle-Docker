@@ -35,7 +35,7 @@ def load_img(path):
 
 
 def main(prompt, initimg, outdir, model, device, ddim_steps=200,
-         ddim_eta=0.0, n_iter=1, n_samples=5, scale=5.0, strength=0.55,
+         ddim_eta=0.0, n_iter=1, n_samples=1, scale=5.0, strength=0.55,
          precision="autocast", task_id=''):
 
     sampler = DDIMSampler(model)
